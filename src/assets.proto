@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package taurustrade.model;
+
+//import "google/protobuf/duration.proto";
+//import public "google/protobuf/timestamp.proto";
+
+
+/**
+ * Direction is applied both on Orders and on Positions.
+ */
+
+enum Direction {
+    SHORT = 0;
+    LONG = 1;
+}
+
+
+message AssetUnit {
