@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+//import "google/protobuf/any.proto";
+
+package taurustrade.message;
+
+message StrategyStatus {
+  string name = 1;
+  bool isRunning = 2;
+  double heartBeating = 3;
+}
+
+message GatewayStatus {
+  string name = 1;
+  bool isRunning = 2;
+  double heartBeating = 3;
+}
+
+/**
+ *
+ */
+ 
+ enum OrderErrorCode {
+    UNKNOWN = 0;
+    UNSUPPORTED_PRICE_TYPE = 1;
+    BAD_DATA_FORMAT = 2;
+  }
+  
+
+
+
+  enum RiskLevel {
+    NONE = 0;
+    WARNING = 1;
+    FORBIDDEN = 2;
+  }
+  
+
+service Gateway {
+    //rpc Connect(Any) returns (SearchResponse);
+}

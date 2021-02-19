@@ -1,0 +1,174 @@
+syntax = "proto3";
+
+package taurustrade.message;
+option go_package = ".;taurustrade";
+
+import "google/protobuf/duration.proto";
+import public "google/protobuf/timestamp.proto";
+
+
+  
+
+
+
+enum SecurityType {
+    STOCK = 0;  //股票,   EQUITY(vnpy)
+    FUND = 1;   // 基金
+    INDEX = 2; // 指数
+    FUTURES = 3; // 期货
+    OPTIONS = 4; //期权
+    ETF = 5;    // ETF
+    
+    
+    
+    SPREAD = 80;  // 价差
+    
+    /* others in vnpy
+    FOREX = "外汇"
+    SPOT = "现货"
+    BOND = "债券"
+    WARRANT = "权证"
+
+    * others in joinQuant
+     lof'
+     fja'
+     fjb'
+     open_fund'
+     bond_fund'
+     stock_fund'
+     QDII_fund'
+     money_market_fund'
+     mixture_fund'。
+    */
+    
+}
+
+ 
+ 
+
+enum Exchange {
+    // 以百度百科中的缩写为准
+    //proto3版本中，首成员必须为0，成员不应有相同的值
+
+    SSE = 0;   //Shanghai Stock Exchange. XSHG(joinQuant)
+    SZSE = 1;  //Shenzhen Stock Exchange. XSHE(JoinQuant)
+    CFFEX = 2; //China Financial Futures Exchange. CCFX(JoinQuant)
+    SHFE = 3;  //Shanghai Futures Exchange. XSGE(JoinQuant)
+    CZCE = 4;  //Zhengzhou Commodity Exchange.  XZCE(JoinQuant)
+    DCE = 5;   //Dalian Commodity Exchange.  XDCE(JoinQuant)
+    INE = 6;  // Shanghai International Energy Exchange.  XINE(JoinQuant)
+    
+    NEEQ = 10; //
+    
+    LOCAL = 99; // For local generated data
+
+    /* others in vnpy
+    # Chinese
+    
+    SGE = "SGE"             # Shanghai Gold Exchange
+    WXE = "WXE"             # Wuxi Steel Exchange
+    CFETS = "CFETS"         # China Foreign Exchange Trade System
+    */
+}
+
+
+//Contract data contains basic information about each contract traded.
+message Security {
+	string symbol = 1;  // full symbol with code and exchange
+	taurustrade.message.SecurityType type = 2;
+	string display_name = 3;	// 中文名称
+	string name = 4;	// 代号
+	google.protobuf.Timestamp start_date = 5;	// yyyy-mm-dd
+	google.protobuf.Timestamp end_date = 6;	// yyyy-mm-dd
+
+ 
+  
+ 
+//     size: int
+//     pricetick: double
+
+//     min_volume: double = 1           # minimum trading volume of the contract
+//     stop_supported: bool = False    # whether server supports stop order
+//     net_position: bool = False      # whether gateway uses net position volume
+//     history_data: bool = False      # whether gateway provides bar history data
+
+//     option_strike: double = 0
+//     option_underlying: str = ""     # vt_symbol of underlying contract
+//     option_type: OptionType = None
+//     option_expiry: datetime = None
+//     option_portfolio: str = ""
+//     option_index: str = ""          # for identifying options with same strike price
+
+}
+
+message Tick {
+  string symbol = 1;
+  google.protobuf.Timestamp time = 2;
+  //name: str = ""
+
+  double openPrice = 10;
+  double highPrice = 11;
+  double lowPrice = 12;
+  double preClosePrice = 13;
+  double lastPrice = 14; 	//当前价
+
+  // limit_up: double = 0
+  // limit_down: double = 0
+  double volume = 21;		//累计成交量（股）
+  double amount = 22; 		//累计成交额
+
+  // repeated double askPrices = 0.0;
+  // repeated double askVolumes = 0;
+  repeated double bidPrices = 30;
+  repeated double bidVolumes = 40;
+
+  repeated double askPrices = 50;
+  repeated double askVolumes = 60;
+
+  // double bidPrice1 = 31;
+  // double bidPrice2 = 32;
+  // double bidPrice3 = 33;
+  // double bidPrice4 = 34;
+  // double bidPrice5 = 35;
+
+  // double bidVolume1 = 41;
+  // double bidVolume2 = 42;
+  // double bidVolume3 = 43;
+  // double bidVolume4 = 44;
+  // double bidVolume5 = 45;
+
+  // double askPrice1 = 51;
+  // double askPrice2 = 52;
+  // double askPrice3 = 53;
+  // double askPrice4 = 54;
+  // double askPrice5 = 55;
+
+  // double askVolume1 = 61;
+  // double askVolume2 = 62;
+  // double askVolume3 = 63;
+  // double askVolume4 = 64;
+  // double askVolume5 = 65;
+
+
+}
+
+
+message Bar {
+  string symbol = 1;
+  google.protobuf.Duration interval = 2;
+
+  google.protobuf.Timestamp time = 3;
+
+  double openPrice = 21;
+  double highPrice = 22;
+  double lowPrice = 23;
+  double closePrice = 24;
+  double volume = 25;
+  double amount = 26;
+
+
+  /* vnpy
+    open_interest: double = 0
+   */
+}
+

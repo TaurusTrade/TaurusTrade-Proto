@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+import "trade.proto";
+
+package taurustrade.framework;
+
+
+option cc_generic_services = true;
+
+/**
+ * All interfaces should follow the rules of CQRS.
+ * In CQRS, operations are discriminated as 'reading' (name as QUERY) and 'writing' (name as COMMAND).
+ * That means, a QUERY can only read datas while a COMMAND can update datas.
+ * For efficiency, a COMMAND should be executed asyncronisedly. But it can return a RESULT right away to 
+ * tell the sender if the COMMAND is accepted.
+ * As for QUERY, it should change any datas, and a response to a QUERY will not contain any domain knowledges. 
+ */
+
+
+
+
+message SubscribeCommand {
+	repeated string symbol = 1;
+	string gatewayID = 99;
+}
+
+message UnSubscribeCommand {
+	repeated string symbol = 1;
+	string gatewayID = 99;
+}
+
+/**
+ * A SendOrderCommand tell a gateway to send a order, and gateway should return OrderResult imediately.
+ */
+message SendOrderCommand {
+	string symbol = 1;
+    taurustrade.message.Direction direction = 2;
+    taurustrade.message.Offset offset = 3;    
+	taurustrade.message.PriceType type = 4;
+	taurustrade.message.TradePurpose purpose = 5;
+    double price = 6;
+    double volume = 7; 
+  
+  
+	string reference = 90;
+	string gatewayID = 99;
+}
+
+
+message CancelOrderCommand {
+    string gatewayID = 99;
+}
+
+// 命令异步执行，但要同步给一个回执？？
+
+/**
+ * 下单或撤单动作的结果类型。 只用于 <href>OrderResult</href>.
+ *
+ * SUCCESSFUL: 下单或撤单指令正确，且符合风控要求，已经报往交易所。
+ *
+ * UNSUFFICIENT: 余额不足(持仓余额或资金不足)
+ *
+ * RISKFUL: 该委托存在风险，且达到了风控禁止的条件.
+ *
+ * OTHERS: 由于其他原因导致的下单或撤单失败。
+ */
+// enum OrderResultType {
+// 	SUCCESSFUL = 0;
+// 	UNSUFFICIENT = 1;
+// 	RISKFUL = 2;
+// 	OTHERS = 99;
+// }
+
+
+
+/**
+ * 下单或撤单动作返回的结果.  
+ * <dl>
+ * <dt>resultType:</dt> 结果类型。 表示下单动作成功或失败。详见 OrderResultType。
+ * <dt>orderID:</dt> 订单号。由交易所分配。 
+ * 下单成功时，返回交易所分配的订单号
+ * 下单失败时，不返回订单号
+ * 撤单时，不管成功或失败均返回待撤的订单号
+ * <dt>externalID:</dt> 第三方系统自定义号。比如柜台系统中的流水号。
+ * </dl>
+ */
+message OrderResult {
+	//OrderResultType resultType = 1;
+	int32 code = 1;
+	string orderID = 2;
+	string externalID = 3;
+	string message = 10;
+
+/*
+QuanTu
+
+MBasketEntrustResult			
+字段名称	字段说明	字段类型	备注
+error_no	错误代码	int	
+error_info	证券代码	string	
+entrust_no	委托编号	int	
+batch_no	操作批号	int	
+investunit_id	投资单元ID	int	
+instance_id	交易投资组合ID	int	
+capitalunit_id	资金账户ID	int	
+strategy_flag_id	策略标志ID	int	
+strategy_req_id	策略请求ID	int	
+success_flag	撤单成功标志	string	
+
+
+O32
+
+1: required OrderResultType resultType,
+	2: optional string orderID,		# 
+	3: optional string externalID
+	
+	risk_serial_no	N8	风控判断流水号		用于关联风控信息包中的风控信息条目	v	v	v
+*/
+
+
+}
+
+
+service GatewayService {
+	rpc SendOrder(SendOrderCommand) returns (OrderResult);
+	rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
+}
+

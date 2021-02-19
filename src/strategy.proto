@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package taurustrade.framework;
+
+message StrategyStatus {
+	string name = 1;
+	bool isRunning = 2;
+	double heartBeating = 3;
+}
