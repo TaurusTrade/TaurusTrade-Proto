@@ -1,8 +1,21 @@
+/**
+ * 公共类型
+ */
 syntax = "proto3";
+package taurustrade.api;
 
 //import "google/protobuf/any.proto";
 
-package taurustrade.message;
+
+
+/**
+ *  和证券代码相关的请求 
+ */
+message SymbolRequest { 
+  string symbol = 1;      /// 证券代码。 格式应该为 证券代码.交易所代码
+  string exchange = 2;    // 交易所代码
+}
+
 
 //general response for RPC call
 message GeneralRpcResponse {

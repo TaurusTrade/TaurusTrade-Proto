@@ -1,19 +1,32 @@
+/**
+ * 交易服务及相关消息
+ * 
+ * TODO：'buy'：开多，'short'：开空，'cover'：平空，'sell'：平多
+ */
 syntax = "proto3";
 
-package taurustrade.message;
-option go_package = ".;taurustrade";
+package taurustrade.api.trade;
+
+//option go_package = ".;taurustrade";
 
 //import "google/protobuf/duration.proto";
 import public "google/protobuf/timestamp.proto";
 
 
 /**
- * Direction is applied both on Orders and on Positions.
+ * 交易服务。 
  */
+service TradeService {
+    
+}
 
+
+/**
+ * 交易方向
+ */
 enum Direction {
-    SHORT = 0;
-    LONG = 1;
+    SHORT = 0;  /// 空头
+    LONG = 1;   /// 多头
 }
 
 /**
@@ -174,7 +187,7 @@ message Order {
     string symbol = 1;
     Direction direction = 2;
     Offset offset = 3;    
-    taurustrade.message.PriceType type = 4;
+    PriceType type = 4;
     TradePurpose purpose = 5;
 	double price = 10;
 	double volume = 11; 
@@ -216,7 +229,7 @@ message Transaction {
     
     Direction direction = 11;
     Offset offset = 12;
-    taurustrade.message.PriceType type = 13;
+    PriceType type = 13;
 
     
 
@@ -231,7 +244,7 @@ message Transaction {
 //Positon data is used for tracking each individual position holding.
 message Position {
 	string symbol = 1;
-	taurustrade.message.Direction direction = 2;
+	Direction direction = 2;
 	double volume = 3;
 	double price = 4;			//均价
 	double frozenVolume = 5;

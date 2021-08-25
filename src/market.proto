@@ -1,14 +1,53 @@
-syntax = "proto3";
+/**
+ * 行情相关。 taurustrade.api.market
+ */
 
-package taurustrade.message;
-option go_package = ".;taurustrade";
+syntax = "proto3";
+package taurustrade.api.market;
+
+//option go_package = ".;taurustrade";
 
 import "google/protobuf/duration.proto";
 import public "google/protobuf/timestamp.proto";
 
+import "framework.proto";
 
+/**
+ * Tick 数据
+ */
+message Tick {
+  string symbol = 1;
+  google.protobuf.Timestamp time = 2;   // 行情时间
+
+
+  double openPrice = 10;            // 开盘价
+  double highPrice = 11;            // 最高价
+  double lowPrice = 12;             // 最低价
+  double preClosePrice = 13;        // 前收盘价
+  double lastPrice = 14;            // 最新价
+
+  // limit_up: double = 0
+  // limit_down: double = 0
   
+  double volume = 21;   //累计成交量
+  double amount = 22;     //累计成交额
 
+  uint32 orderbookSize = 30;        // 订单簿深度
+  repeated double bidPrices = 31;   // 买盘价格
+  repeated double bidVolumes = 32;  // 买盘数量
+
+  repeated double askPrices = 33;   // 卖盘价格
+  repeated double askVolumes = 34;  // 卖盘数量
+}
+
+
+/**
+ * 行情服务
+ */
+service MarketService {
+  rpc SubscribeTick (SymbolRequest) returns (stream Tick);          //订阅 Tick 行情
+  rpc UnSubscribeTick(SymbolRequest) returns (taurustrade.api.GeneralRpcResponse);  //退订 Tick 行情
+}
 
 
 enum SecurityType {
@@ -75,7 +114,7 @@ enum Exchange {
 //Contract data contains basic information about each contract traded.
 message Security {
 	string symbol = 1;  // full symbol with code and exchange
-	taurustrade.message.SecurityType type = 2;
+	SecurityType type = 2;
 	string display_name = 3;	// 中文名称
 	string name = 4;	// 代号
 	google.protobuf.Timestamp start_date = 5;	// yyyy-mm-dd
@@ -101,56 +140,7 @@ message Security {
 
 }
 
-message Tick {
-  string symbol = 1;
-  google.protobuf.Timestamp time = 2;
-  //name: str = ""
 
-  double openPrice = 10;
-  double highPrice = 11;
-  double lowPrice = 12;
-  double preClosePrice = 13;
-  double lastPrice = 14; 	//当前价
-
-  // limit_up: double = 0
-  // limit_down: double = 0
-  double volume = 21;		//累计成交量（股）
-  double amount = 22; 		//累计成交额
-
-  // repeated double askPrices = 0.0;
-  // repeated double askVolumes = 0;
-  repeated double bidPrices = 30;
-  repeated double bidVolumes = 40;
-
-  repeated double askPrices = 50;
-  repeated double askVolumes = 60;
-
-  // double bidPrice1 = 31;
-  // double bidPrice2 = 32;
-  // double bidPrice3 = 33;
-  // double bidPrice4 = 34;
-  // double bidPrice5 = 35;
-
-  // double bidVolume1 = 41;
-  // double bidVolume2 = 42;
-  // double bidVolume3 = 43;
-  // double bidVolume4 = 44;
-  // double bidVolume5 = 45;
-
-  // double askPrice1 = 51;
-  // double askPrice2 = 52;
-  // double askPrice3 = 53;
-  // double askPrice4 = 54;
-  // double askPrice5 = 55;
-
-  // double askVolume1 = 61;
-  // double askVolume2 = 62;
-  // double askVolume3 = 63;
-  // double askVolume4 = 64;
-  // double askVolume5 = 65;
-
-
-}
 
 
 message Bar {

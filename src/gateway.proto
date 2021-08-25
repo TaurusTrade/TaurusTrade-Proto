@@ -2,6 +2,7 @@
  * 网关服务
  */
 syntax = "proto3";
+package taurustrade.api.gateway;
 
 import "framework.proto";
 import "market.proto";
@@ -9,17 +10,34 @@ import "trade.proto";
 
 
 import "google/protobuf/empty.proto";
-package taurustrade.framework;
+import "google/protobuf/any.proto";
+
+
 
 //option csharp_namespace = "TaurusTrade.Requests";
 
 
 /**
- *  和证券代码相关的请求 
+ * 网关服务。
+ * 网关是交易和Tick行情的结合。
  */
-message SymbolRequest {	
-	string symbol = 1;	/// 证券代码。 格式应该为 证券代码.交易所代码
+service GatewayService {
+	rpc Connect(google.protobuf.Any) returns (taurustrade.api.GeneralRpcResponse);		  //连接网关。 输入任意类型的配置信息
+	rpc Close(google.protobuf.Empty) returns (taurustrade.api.GeneralRpcResponse);		  //关闭连接
+	
+	//不支持， TradeService 不是 Message
+	//rpc GetTradeService(google.protobuf.Empty) returns (taurustrade.api.trade.TradeService);  // 获取交易服务
+	
+
+	//订阅 Tick 数据
+	
+
+	//rpc SendOrder(SendOrderCommand) returns (OrderResult);
+	//rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
 }
+
+
+
 
 /**
  * A SendOrderCommand tell a gateway to send a order, and gateway should return OrderResult imediately.
@@ -112,17 +130,7 @@ O32
 
 }
 
-/**
- * 网关服务
- */
-service GatewayService {
-	//订阅 Tick 数据
-	rpc SubscribeTick (SymbolRequest) returns (stream taurustrade.message.Tick);
-	rpc UnSubscribeTick(SymbolRequest) returns (taurustrade.message.GeneralRpcResponse);
 
-	//rpc SendOrder(SendOrderCommand) returns (OrderResult);
-	rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
-}
 
 /*
 service GatewayService {
@@ -130,9 +138,7 @@ service GatewayService {
 	//rpc SendOrder(SendOrderCommand) returns (OrderResult);
 	//rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
 
-	//vnpy gateway
-	rpc Connect(dict) returns (GeneralRpcResponse)
-	rpc Close(google.protobuf.Empty) returns (GeneralRpcResponse)
+	
 
 	//rpc Subscribe(SubscribeRequest) returns (GeneralRpcResponse)
 	rpc Subscribe(SubscribeRequest) returns (stream Tick)
