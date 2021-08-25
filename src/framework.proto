@@ -4,6 +4,14 @@ syntax = "proto3";
 
 package taurustrade.message;
 
+//general response for RPC call
+message GeneralRpcResponse {
+  uint32 code = 1;
+  string message = 2;
+}
+
+
+
 message StrategyStatus {
   string name = 1;
   bool isRunning = 2;

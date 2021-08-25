@@ -150,7 +150,19 @@ enum PriceType {
 
     
 
-
+//OrderState TransOrderStatus(String^ label)
+//{
+//  if(label=="0") return OrderState::NEW;                          //未报
+//  if(label=="1") return OrderState::PENDING;                      //正报
+//  if(label=="2") return OrderState::ACTIVE;                       //已报
+//  if(label=="3") return OrderState::CANCELLING;                   //已报待撤
+//  if(label=="4") return OrderState::CANCELLING;                   //部成待撤
+//  if(label=="5") return OrderState::PARTIALLY_CANCELLED;          //部撤
+//  if(label=="6") return OrderState::CANCELLED;                    //已撤
+//  if(label=="7") return OrderState::PARTIALLY_CANCELLED;          //部成已撤
+//  if(label=="8") return OrderState::FILLED;                       //已成
+//  if(label=="9") return OrderState::REJECTED;                     //废单
+//  if(label=="A") return OrderState::PENDING;                      //待报    写入报盘队列未成功
 
 
 

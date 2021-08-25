@@ -1,50 +1,42 @@
+/**
+ * 网关服务
+ */
 syntax = "proto3";
 
+import "framework.proto";
+import "market.proto";
 import "trade.proto";
 
+
+import "google/protobuf/empty.proto";
 package taurustrade.framework;
 
+//option csharp_namespace = "TaurusTrade.Requests";
 
-option cc_generic_services = true;
 
 /**
- * All interfaces should follow the rules of CQRS.
- * In CQRS, operations are discriminated as 'reading' (name as QUERY) and 'writing' (name as COMMAND).
- * That means, a QUERY can only read datas while a COMMAND can update datas.
- * For efficiency, a COMMAND should be executed asyncronisedly. But it can return a RESULT right away to 
- * tell the sender if the COMMAND is accepted.
- * As for QUERY, it should change any datas, and a response to a QUERY will not contain any domain knowledges. 
+ *  和证券代码相关的请求 
  */
-
-
-
-
-message SubscribeCommand {
-	repeated string symbol = 1;
-	string gatewayID = 99;
-}
-
-message UnSubscribeCommand {
-	repeated string symbol = 1;
-	string gatewayID = 99;
+message SymbolRequest {	
+	string symbol = 1;	/// 证券代码。 格式应该为 证券代码.交易所代码
 }
 
 /**
  * A SendOrderCommand tell a gateway to send a order, and gateway should return OrderResult imediately.
  */
-message SendOrderCommand {
-	string symbol = 1;
-    taurustrade.message.Direction direction = 2;
-    taurustrade.message.Offset offset = 3;    
-	taurustrade.message.PriceType type = 4;
-	taurustrade.message.TradePurpose purpose = 5;
-    double price = 6;
-    double volume = 7; 
+// message SendOrderCommand {
+// 	string symbol = 1;
+//     select.message.Direction direction = 2;
+//     select.message.Offset offset = 3;    
+// 	select.message.PriceType type = 4;
+// 	select.message.TradePurpose purpose = 5;
+//     double price = 6;
+//     double volume = 7; 
   
   
-	string reference = 90;
-	string gatewayID = 99;
-}
+// 	string reference = 90;
+// 	string gatewayID = 99;
+// }
 
 
 message CancelOrderCommand {
@@ -120,9 +112,80 @@ O32
 
 }
 
-
+/**
+ * 网关服务
+ */
 service GatewayService {
-	rpc SendOrder(SendOrderCommand) returns (OrderResult);
+	//订阅 Tick 数据
+	rpc SubscribeTick (SymbolRequest) returns (stream taurustrade.message.Tick);
+	rpc UnSubscribeTick(SymbolRequest) returns (taurustrade.message.GeneralRpcResponse);
+
+	//rpc SendOrder(SendOrderCommand) returns (OrderResult);
 	rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
 }
+
+/*
+service GatewayService {
+	//GeneralRpcResponse
+	//rpc SendOrder(SendOrderCommand) returns (OrderResult);
+	//rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
+
+	//vnpy gateway
+	rpc Connect(dict) returns (GeneralRpcResponse)
+	rpc Close(google.protobuf.Empty) returns (GeneralRpcResponse)
+
+	//rpc Subscribe(SubscribeRequest) returns (GeneralRpcResponse)
+	rpc Subscribe(SubscribeRequest) returns (stream Tick)
+
+	rpc SendOrder(OrderRequest) returns (OrderResult)	// str: orderID
+	rpc SendOrders (stream OrderRequest) returns (stream OrderResult)	// List[str]: orderIDs
+	
+	rpc CancelOrder(CancelRequest) returns (OrderResult)	// str: orderID
+	rpc CancelOrders (stream CancelRequest) returns (stream OrderResult)	// List[str]: orderIDs
+
+
+	rpc XXX () returns (stream TickData)
+	rpc XXX () returns (stream Trade)
+	rpc XXX () returns (stream Order)
+
+
+	//rpc QueryAccount(google.protobuf.Empty) returns (google.protobuf.Empty)	// original vnpy interface
+	rpc QueryAccount (google.protobuf.Empty) returns (stream Account)
+
+	//query_position
+	rpc QueryPosition (google.protobuf.Empty) returns (stream Position)
+
+
+	//query_history  Query bar history data.
+
+	//get_default_setting
+	rpc GetDefaultSetting(google.protobuf.Empty) returns (dict)
+
+ 	//self.server.register(self.main_engine.query_history)  -> dispatch to gateway
+
+	//rpc XXX () returns (stream Contract)
+
+	//rpc OnLog () returns (stream LogData)
+
+   
+   //vnpy OmsEngine( as a cache)
+   rpc GetTick(string) returns (Tick)
+
+   
+		// dispatch to OmsEngine
+        self.server.register(self.main_engine.get_tick)
+        self.server.register(self.main_engine.get_order)
+        self.server.register(self.main_engine.get_trade)
+        self.server.register(self.main_engine.get_position)
+        self.server.register(self.main_engine.get_account)
+        self.server.register(self.main_engine.get_contract)
+        self.server.register(self.main_engine.get_all_ticks)
+        self.server.register(self.main_engine.get_all_orders)
+        self.server.register(self.main_engine.get_all_trades)
+        self.server.register(self.main_engine.get_all_positions)
+        self.server.register(self.main_engine.get_all_accounts)
+        self.server.register(self.main_engine.get_all_contracts)
+        self.server.register(self.main_engine.get_all_active_orders)
+   
+}*/
 

@@ -17,3 +17,20 @@ enum Direction {
 
 
 message AssetUnit {
+	string ID = 1;
+	string Name = 2;
+	string AccountID = 3;
+}
+
+message Portfolio {
+	AssetUnit Unit = 1;
+}
+
+
+/*
+message Asset {
+	Portfolio portfolio = 1;
+	Security security = 2;
+	Position position = 3;
+}
+*/

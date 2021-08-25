@@ -1,9 +1,33 @@
 syntax = "proto3";
 
+option csharp_namespace = "AspNetCoregRpcService";
+
+import "google/protobuf/empty.proto";
 package taurustrade.framework;
 
 message StrategyStatus {
 	string name = 1;
 	bool isRunning = 2;
 	double heartBeating = 3;
+}
+
+message StringPub{
+	string value =1;
+  }
+
+service Strategy {
+
+	//简单rpc
+	//rpc Count(google.protobuf.Empty) returns (CountCatResult);
+
+	// 发布是rpc的普通方法
+	//rpc Publish (StringPub) returns (StringPub);
+
+	// 订阅则是一个单向的流服务，服务端返回的数据可能很大
+	//rpc Subscribe (StringPub) returns (stream StringPub);
+
+	//双向流
+	//定义给猫洗澡双向流rpc
+	//rpc BathTheCat(stream BathTheCatReq) returns ( stream BathTheCatResp);
+
 }
