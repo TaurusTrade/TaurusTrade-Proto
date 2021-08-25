@@ -16,8 +16,10 @@ import "framework.proto";
  * Tick 数据
  */
 message Tick {
-  string symbol = 1;
-  google.protobuf.Timestamp time = 2;   // 行情时间
+  string symbol = 1;                // 证券代码
+  Exchange exchange = 2;            // 交易所
+
+  google.protobuf.Timestamp time = 3;   // 行情时间
 
 
   double openPrice = 10;            // 开盘价
@@ -39,6 +41,17 @@ message Tick {
   repeated double askPrices = 33;   // 卖盘价格
   repeated double askVolumes = 34;  // 卖盘数量
 }
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 
 
 /**
@@ -85,30 +98,7 @@ enum SecurityType {
  
  
 
-enum Exchange {
-    // 以百度百科中的缩写为准
-    //proto3版本中，首成员必须为0，成员不应有相同的值
 
-    SSE = 0;   //Shanghai Stock Exchange. XSHG(joinQuant)
-    SZSE = 1;  //Shenzhen Stock Exchange. XSHE(JoinQuant)
-    CFFEX = 2; //China Financial Futures Exchange. CCFX(JoinQuant)
-    SHFE = 3;  //Shanghai Futures Exchange. XSGE(JoinQuant)
-    CZCE = 4;  //Zhengzhou Commodity Exchange.  XZCE(JoinQuant)
-    DCE = 5;   //Dalian Commodity Exchange.  XDCE(JoinQuant)
-    INE = 6;  // Shanghai International Energy Exchange.  XINE(JoinQuant)
-    
-    NEEQ = 10; //
-    
-    LOCAL = 99; // For local generated data
-
-    /* others in vnpy
-    # Chinese
-    
-    SGE = "SGE"             # Shanghai Gold Exchange
-    WXE = "WXE"             # Wuxi Steel Exchange
-    CFETS = "CFETS"         # China Foreign Exchange Trade System
-    */
-}
 
 
 //Contract data contains basic information about each contract traded.

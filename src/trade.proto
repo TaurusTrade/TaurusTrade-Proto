@@ -13,11 +13,16 @@ package taurustrade.api.trade;
 import public "google/protobuf/timestamp.proto";
 
 
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 /**
  * 交易服务。 
  */
 service TradeService {
-    
+
 }
 
 

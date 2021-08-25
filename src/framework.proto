@@ -4,8 +4,32 @@
 syntax = "proto3";
 package taurustrade.api;
 
-//import "google/protobuf/any.proto";
+import "google/protobuf/any.proto";
 
+/**
+ * 交易所。以百度百科中的缩写为准。
+ */
+enum Exchange {
+    SSE = 0;   // 上交所 (Shanghai Stock Exchange)
+    SZSE = 1;  // 深交所 (Shenzhen Stock Exchange)
+    CFFEX = 2; //China Financial Futures Exchange. CCFX(JoinQuant)
+    SHFE = 3;  //Shanghai Futures Exchange. XSGE(JoinQuant)
+    CZCE = 4;  //Zhengzhou Commodity Exchange.  XZCE(JoinQuant)
+    DCE = 5;   //Dalian Commodity Exchange.  XDCE(JoinQuant)
+    INE = 6;  // Shanghai International Energy Exchange.  XINE(JoinQuant)
+    
+    NEEQ = 10; // 股转公司
+    
+    LOCAL = 99; // For local generated data
+
+    /* others in vnpy
+    # Chinese
+    
+    SGE = "SGE"             # Shanghai Gold Exchange
+    WXE = "WXE"             # Wuxi Steel Exchange
+    CFETS = "CFETS"         # China Foreign Exchange Trade System
+    */
+}
 
 
 /**
@@ -17,25 +41,21 @@ message SymbolRequest {
 }
 
 
-//general response for RPC call
+/**
+ * 通用返回值：状态码+消息+其他
+ */
 message GeneralRpcResponse {
   uint32 code = 1;
   string message = 2;
+  google.protobuf.Any data = 3;
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////
 
-message StrategyStatus {
-  string name = 1;
-  bool isRunning = 2;
-  double heartBeating = 3;
-}
 
-message GatewayStatus {
-  string name = 1;
-  bool isRunning = 2;
-  double heartBeating = 3;
-}
+
+
 
 /**
  *

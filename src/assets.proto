@@ -10,10 +10,8 @@ package taurustrade.model;
  * Direction is applied both on Orders and on Positions.
  */
 
-enum Direction {
-    SHORT = 0;
-    LONG = 1;
-}
+////////////////////////////////////////////////////////////////////////////////
+
 
 
 message AssetUnit {

@@ -187,10 +187,6 @@
                 </li>
               
               
-                <li>
-                  <a href="#taurustrade.model.Direction"><span class="badge">E</span>Direction</a>
-                </li>
-              
               
               
             </ul>
@@ -202,21 +198,17 @@
             <ul>
               
                 <li>
-                  <a href="#taurustrade.api.GatewayStatus"><span class="badge">M</span>GatewayStatus</a>
-                </li>
-              
-                <li>
                   <a href="#taurustrade.api.GeneralRpcResponse"><span class="badge">M</span>GeneralRpcResponse</a>
-                </li>
-              
-                <li>
-                  <a href="#taurustrade.api.StrategyStatus"><span class="badge">M</span>StrategyStatus</a>
                 </li>
               
                 <li>
                   <a href="#taurustrade.api.SymbolRequest"><span class="badge">M</span>SymbolRequest</a>
                 </li>
               
+              
+                <li>
+                  <a href="#taurustrade.api.Exchange"><span class="badge">E</span>Exchange</a>
+                </li>
               
                 <li>
                   <a href="#taurustrade.api.OrderErrorCode"><span class="badge">E</span>OrderErrorCode</a>
@@ -242,6 +234,10 @@
               
                 <li>
                   <a href="#taurustrade.api.gateway.CancelOrderCommand"><span class="badge">M</span>CancelOrderCommand</a>
+                </li>
+              
+                <li>
+                  <a href="#taurustrade.api.gateway.GatewayStatus"><span class="badge">M</span>GatewayStatus</a>
                 </li>
               
                 <li>
@@ -275,10 +271,6 @@
                   <a href="#taurustrade.api.market.Tick"><span class="badge">M</span>Tick</a>
                 </li>
               
-              
-                <li>
-                  <a href="#taurustrade.api.market.Exchange"><span class="badge">E</span>Exchange</a>
-                </li>
               
                 <li>
                   <a href="#taurustrade.api.market.SecurityType"><span class="badge">E</span>SecurityType</a>
@@ -458,29 +450,6 @@
       
 
       
-        <h3 id="taurustrade.model.Direction">Direction</h3>
-        <p></p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>SHORT</td>
-                <td>0</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LONG</td>
-                <td>1</td>
-                <td><p></p></td>
-              </tr>
-            
-          </tbody>
-        </table>
-      
 
       
 
@@ -493,46 +462,8 @@
       <p>公共类型</p>
 
       
-        <h3 id="taurustrade.api.GatewayStatus">GatewayStatus</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
-                <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>isRunning</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>heartBeating</td>
-                  <td><a href="#double">double</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-            </tbody>
-          </table>
-
-          
-
-        
-      
         <h3 id="taurustrade.api.GeneralRpcResponse">GeneralRpcResponse</h3>
-        <p>general response for RPC call</p>
+        <p>通用返回值：状态码+消息+其他</p>
 
         
           <table class="field-table">
@@ -555,40 +486,9 @@
                   <td><p> </p></td>
                 </tr>
               
-            </tbody>
-          </table>
-
-          
-
-        
-      
-        <h3 id="taurustrade.api.StrategyStatus">StrategyStatus</h3>
-        <p></p>
-
-        
-          <table class="field-table">
-            <thead>
-              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
-            </thead>
-            <tbody>
-              
                 <tr>
-                  <td>name</td>
-                  <td><a href="#string">string</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>isRunning</td>
-                  <td><a href="#bool">bool</a></td>
-                  <td></td>
-                  <td><p> </p></td>
-                </tr>
-              
-                <tr>
-                  <td>heartBeating</td>
-                  <td><a href="#double">double</a></td>
+                  <td>data</td>
+                  <td><a href="#google.protobuf.Any">google.protobuf.Any</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -632,6 +532,71 @@
         
       
 
+      
+        <h3 id="taurustrade.api.Exchange">Exchange</h3>
+        <p>交易所。以百度百科中的缩写为准。</p>
+        <table class="enum-table">
+          <thead>
+            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td>SSE</td>
+                <td>0</td>
+                <td><p>上交所 (Shanghai Stock Exchange)</p></td>
+              </tr>
+            
+              <tr>
+                <td>SZSE</td>
+                <td>1</td>
+                <td><p>深交所 (Shenzhen Stock Exchange)</p></td>
+              </tr>
+            
+              <tr>
+                <td>CFFEX</td>
+                <td>2</td>
+                <td><p>China Financial Futures Exchange. CCFX(JoinQuant)</p></td>
+              </tr>
+            
+              <tr>
+                <td>SHFE</td>
+                <td>3</td>
+                <td><p>Shanghai Futures Exchange. XSGE(JoinQuant)</p></td>
+              </tr>
+            
+              <tr>
+                <td>CZCE</td>
+                <td>4</td>
+                <td><p>Zhengzhou Commodity Exchange.  XZCE(JoinQuant)</p></td>
+              </tr>
+            
+              <tr>
+                <td>DCE</td>
+                <td>5</td>
+                <td><p>Dalian Commodity Exchange.  XDCE(JoinQuant)</p></td>
+              </tr>
+            
+              <tr>
+                <td>INE</td>
+                <td>6</td>
+                <td><p>Shanghai International Energy Exchange.  XINE(JoinQuant)</p></td>
+              </tr>
+            
+              <tr>
+                <td>NEEQ</td>
+                <td>10</td>
+                <td><p>股转公司</p></td>
+              </tr>
+            
+              <tr>
+                <td>LOCAL</td>
+                <td>99</td>
+                <td><p>For local generated data</p></td>
+              </tr>
+            
+          </tbody>
+        </table>
       
         <h3 id="taurustrade.api.OrderErrorCode">OrderErrorCode</h3>
         <p></p>
@@ -728,6 +693,44 @@
                 <tr>
                   <td>gatewayID</td>
                   <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+            </tbody>
+          </table>
+
+          
+
+        
+      
+        <h3 id="taurustrade.api.gateway.GatewayStatus">GatewayStatus</h3>
+        <p></p>
+
+        
+          <table class="field-table">
+            <thead>
+              <tr><td>Field</td><td>Type</td><td>Label</td><td>Description</td></tr>
+            </thead>
+            <tbody>
+              
+                <tr>
+                  <td>name</td>
+                  <td><a href="#string">string</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>isRunning</td>
+                  <td><a href="#bool">bool</a></td>
+                  <td></td>
+                  <td><p> </p></td>
+                </tr>
+              
+                <tr>
+                  <td>heartBeating</td>
+                  <td><a href="#double">double</a></td>
                   <td></td>
                   <td><p> </p></td>
                 </tr>
@@ -977,7 +980,14 @@
                   <td>symbol</td>
                   <td><a href="#string">string</a></td>
                   <td></td>
-                  <td><p> </p></td>
+                  <td><p>证券代码 </p></td>
+                </tr>
+              
+                <tr>
+                  <td>exchange</td>
+                  <td><a href="#taurustrade.api.Exchange">taurustrade.api.Exchange</a></td>
+                  <td></td>
+                  <td><p>交易所 </p></td>
                 </tr>
               
                 <tr>
@@ -1079,71 +1089,6 @@
         
       
 
-      
-        <h3 id="taurustrade.api.market.Exchange">Exchange</h3>
-        <p>以百度百科中的缩写为准</p><p>proto3版本中，首成员必须为0，成员不应有相同的值</p>
-        <table class="enum-table">
-          <thead>
-            <tr><td>Name</td><td>Number</td><td>Description</td></tr>
-          </thead>
-          <tbody>
-            
-              <tr>
-                <td>SSE</td>
-                <td>0</td>
-                <td><p>Shanghai Stock Exchange. XSHG(joinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>SZSE</td>
-                <td>1</td>
-                <td><p>Shenzhen Stock Exchange. XSHE(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>CFFEX</td>
-                <td>2</td>
-                <td><p>China Financial Futures Exchange. CCFX(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>SHFE</td>
-                <td>3</td>
-                <td><p>Shanghai Futures Exchange. XSGE(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>CZCE</td>
-                <td>4</td>
-                <td><p>Zhengzhou Commodity Exchange.  XZCE(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>DCE</td>
-                <td>5</td>
-                <td><p>Dalian Commodity Exchange.  XDCE(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>INE</td>
-                <td>6</td>
-                <td><p>Shanghai International Energy Exchange.  XINE(JoinQuant)</p></td>
-              </tr>
-            
-              <tr>
-                <td>NEEQ</td>
-                <td>10</td>
-                <td><p></p></td>
-              </tr>
-            
-              <tr>
-                <td>LOCAL</td>
-                <td>99</td>
-                <td><p>For local generated data</p></td>
-              </tr>
-            
-          </tbody>
-        </table>
       
         <h3 id="taurustrade.api.market.SecurityType">SecurityType</h3>
         <p></p>

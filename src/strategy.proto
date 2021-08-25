@@ -5,6 +5,16 @@ option csharp_namespace = "AspNetCoregRpcService";
 import "google/protobuf/empty.proto";
 package taurustrade.framework;
 
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
 message StrategyStatus {
 	string name = 1;
 	bool isRunning = 2;

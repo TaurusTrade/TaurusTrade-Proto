@@ -17,6 +17,8 @@ import "google/protobuf/any.proto";
 //option csharp_namespace = "TaurusTrade.Requests";
 
 
+////////////////////////////////////////////////////////////////////////////////
+
 /**
  * 网关服务。
  * 网关是交易和Tick行情的结合。
@@ -36,6 +38,21 @@ service GatewayService {
 	//rpc CancelOrder(CancelOrderCommand) returns (OrderResult);
 }
 
+
+
+
+
+
+
+
+
+
+
+message GatewayStatus {
+  string name = 1;
+  bool isRunning = 2;
+  double heartBeating = 3;
+}
 
 
 
