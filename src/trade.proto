@@ -11,7 +11,7 @@ package taurustrade.api.trade;
 
 //import "google/protobuf/duration.proto";
 import public "google/protobuf/timestamp.proto";
-
+import "google/protobuf/empty.proto";
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -22,7 +22,7 @@ import public "google/protobuf/timestamp.proto";
  * 交易服务。 
  */
 service TradeService {
-
+    rpc OnOrder (google.protobuf.Empty) returns (stream Order);          //订阅 委托回报
 }
 
 
@@ -188,7 +188,9 @@ enum PriceType {
 
 message Order {
 	string gatewayID = 99;
+    string traderID = 98;
 
+    
     string symbol = 1;
     Direction direction = 2;
     Offset offset = 3;    

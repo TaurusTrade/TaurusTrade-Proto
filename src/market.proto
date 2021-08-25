@@ -58,7 +58,7 @@ message Tick {
  * 行情服务
  */
 service MarketService {
-  rpc SubscribeTick (SymbolRequest) returns (stream Tick);          //订阅 Tick 行情
+  rpc SubscribeTick (SymbolRequest) returns (stream Tick);                          //订阅 Tick 行情
   rpc UnSubscribeTick(SymbolRequest) returns (taurustrade.api.GeneralRpcResponse);  //退订 Tick 行情
 }
 
